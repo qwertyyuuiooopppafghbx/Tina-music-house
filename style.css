@@ -1,0 +1,546 @@
+/* ===== 全局重置 ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #000;
+    color: #fff;
+    overflow: hidden;
+    font-family: "Segoe Script", "Apple Chancery", "Comic Sans MS", cursive;
+}
+
+/* ===== 背景海报 ===== */
+#bgPoster {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-size: cover;
+    background-position: center;
+    z-index: 0;
+    transition: all 0.8s ease;
+    background-image: url("https://p26-flow-imagex-download-sign.byteimg.com/tos-cn-i-a9rns2rl98/15da8a6a0207405dbdcaf265ea83e256.jpg~tplv-a9rns2rl98-24:720:720.jpg?lk3s=8e244e95&rcl=202603281630073B3D117DF74CD72BCA6C&rrcfp=8a172a1a&x-expires=1775291408&x-signature=Jba4vLQlQr%2BAJYgqOnpqtMLJi1c%3D");
+}
+
+/* ===== 标题栏和面板共用样式 ===== */
+.title-bar,
+.top-panel {
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 66.67%;
+    max-width: none;
+    border-radius: 30px;
+    z-index: 8;
+    background: rgba(20, 20, 20, 0.4);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    transition: all 0.4s ease;
+    box-sizing: border-box;
+}
+
+/* ===== 底部标题栏 ===== */
+.title-bar {
+    bottom: calc(6vh + 80px);
+    height: 56px;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    overflow: hidden;
+    gap: 10px;
+}
+
+/* ===== 虚拟滚动轨道 ===== */
+.scroll-track {
+    width: 86%;  /* 或 60%、80%，自己调 */
+    position: absolute;     /* ← 绝对定位 */
+    left: 50%;              /* ← 左边 50% */
+    transform: translateX(-50%);  /* ← 向左移自身宽度的一半，完美居中 */
+    overflow: hidden;       /* 裁剪超出部分，文字看不见 */
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.music-title {
+    font-size: 16px;
+    font-weight: 500;
+    color: #fff;
+    text-shadow: 0 0 12px rgba(255, 255, 255, 0.3);
+    font-family: "Segoe Script", "Apple Chancery", cursive;
+    white-space: nowrap;
+    flex-shrink: 0;         /* 不压缩，保持完整宽度 */
+}
+
+.music-title.scrolling {
+    animation: scrollTitle 20s linear infinite;
+}
+
+@keyframes scrollTitle {
+    0% {
+        transform: translateX(120%);
+    }
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
+/* ===== 全屏按钮 ===== */
+.fullscreen-btn {
+    margin-left: auto !important;
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(20, 20, 20, 0.4);
+    backdrop-filter: blur(10px);
+    color: #fff;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "Segoe Script", "Apple Chancery", cursive;
+    user-select: none;
+}
+
+/* ===== 顶部设置面板 ===== */
+.top-panel {
+    top: 56px;
+    padding: 20px;
+    height: auto;
+    z-index: 999;
+}
+
+/* 折叠状态 */
+.top-panel.collapsed {
+    height: 60px !important;
+    overflow: hidden;
+}
+
+/* 面板标题 */
+.panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    user-select: none;
+    margin-bottom: 15px;
+    padding: 0 10px;
+    cursor: pointer;
+}
+
+.panel-header h3 {
+    font-size: 16px;
+    font-weight: 500;
+    color: #fff;
+    font-family: "Segoe Script", "Apple Chancery", cursive;
+    white-space: nowrap;
+}
+
+.panel-header span {
+    font-family: "Segoe Script", "Apple Chancery", cursive;
+    color: #fff;
+}
+
+/* ===== 网格布局 ===== */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px 20px;
+    padding: 0 5px;
+    width: 100%;
+}
+
+/* 普通项目 */
+.item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 0;
+    width: 100%;
+}
+
+/* 三项并排 */
+.triple-item {
+    grid-column: span 2;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 0;
+    width: 100%;
+    gap: 10px;
+}
+
+.triple-item .sub-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 33.33%;
+}
+
+/* 颜色和类型并排 */
+.color-type-item {
+    grid-column: span 2;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 0;
+    width: 100%;
+    gap: 10px;
+}
+
+.color-type-item .color-item {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 25%;
+    gap:5px;
+}
+
+.color-type-item .type-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 50%;
+}
+
+/* 全宽项目 */
+.full-width-item {
+    grid-column: span 2;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 0;
+    width: 100%;
+}
+
+.full-width-item .label {
+    min-width: 110px;
+}
+
+.full-width-item select,
+.full-width-item input[type="file"] {
+    width: 100%;
+    max-width: 100%;
+}
+
+/* ===== 标签样式 ===== */
+.label {
+    font-size: 13px;
+    color: #fff;
+    font-family: "Segoe Script", "Apple Chancery", cursive;
+    min-width: 90px;
+    white-space: nowrap;
+    margin-right: 10px;
+    flex-shrink: 0;
+}
+
+.triple-item .label {
+    min-width: 70px;
+}
+
+.color-item .label {
+    min-width: 60px;
+}
+
+.type-item .label {
+    min-width: 110px;
+}
+
+.palette-label {
+    font-size: 13px;
+    color: #fff;
+    font-family: "Segoe Script", "Apple Chancery", cursive;
+    min-width: 90px;
+    white-space: nowrap;
+    margin-right: 10px;
+    flex-shrink: 0;
+}
+
+/*滑块颜色*/
+input[type="range"] {
+    width: 100%;
+    margin-left: 5px;
+    flex-grow: 1;
+    accent-color: #fefefe;
+}
+
+select {
+    border-radius: 24px;
+    background: rgba(40, 40, 40, 0.6);
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 8px 15px;
+    font-family: "Segoe Script", "Apple Chancery", cursive;
+    width: 100%;
+    max-width: 100%;
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='6'%3Cpath fill='%23fff' d='M0 0l6 6 6-6z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 15px center;
+    background-size: 12px;
+    cursor: pointer;
+}
+
+select option {
+    background: #2a2a2a;
+    color: #fff;
+}
+
+input[type="color"] {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    padding: 0;
+    background: transparent;
+    cursor: pointer;
+    margin-left: 5px;
+}
+
+input[type="color"]::-webkit-color-swatch-wrapper {
+    padding: 0px;
+}
+
+input[type="color"]::-webkit-color-swatch {
+    border: none;
+    border-radius: 50%;
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.3);
+}
+
+input[type="file"] {
+    border-radius: 24px;
+    background: rgba(40, 40, 40, 0.6);
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 8px 15px;
+    font-family: "Segoe Script", "Apple Chancery", cursive;
+    width: 100%;
+    cursor: pointer;
+}
+
+input[type="file"]::file-selector-button {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    padding: 5px 15px;
+    color: #fff;
+    cursor: pointer;
+    font-family: "Segoe Script", "Apple Chancery", cursive;
+    margin-right: 10px;
+}
+
+/* ===== 控制按钮组 ===== */
+.control-group {
+    position: fixed;
+    left: 50%;
+    bottom: 6vh;
+    transform: translateX(-50%);
+    width: 66.67%;
+    max-width: none;
+    display: flex;
+    justify-content: space-between;
+    z-index: 10;
+}
+
+/* 默认暗色主题按钮样式 */
+.control-btn {
+    font-size: 16px;
+    border-radius: 30px;
+    padding: 13px 36px !important;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: 1px solid transparent;  /* 颜色由 JS 控制 */
+    font-family: "Segoe Script", "Apple Chancery", cursive;
+    user-select: none;
+}
+
+.control-btn:hover {
+    transform: scale(1.05);
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.control-btn:active {
+    transform: scale(0.95);
+}
+
+/* ===== 可视化画布 ===== */
+#visualizerCanvas {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 5;
+    pointer-events: none;
+}
+
+/* ===== 渐变色盘按钮组 ===== */
+.palette-buttons {
+    grid-column: span 2;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 26px;
+    padding: 5px 0;
+    width: 100%;
+    align-items: center;
+}
+
+.palette-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid #070707;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 0 0 1px rgba(12, 12, 12, 0.2);
+}
+
+.palette-btn.active {
+    border-color: #fff;
+    transform: scale(1.1);
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+}
+
+.palette-btn:hover {
+    transform: scale(1.05);
+}
+
+/* ===== 亮色主题 ===== */
+body.light-theme {
+    background: #fff;
+    color: #000;
+}
+
+/* 亮色主题 - 标题和面板文字 */
+body.light-theme .music-title,
+body.light-theme .panel-header h3,
+body.light-theme .panel-header span,
+body.light-theme .label,
+body.light-theme .palette-label {
+    color: #000;
+    text-shadow: none;
+}
+
+/* 亮色主题 - 标题栏和面板 */
+body.light-theme .title-bar,
+body.light-theme .top-panel {
+    background: rgba(255, 255, 255, 0.4);
+    border-color: rgba(0, 0, 0, 0.15);
+}
+
+/* 亮色主题 - 选择框和文件输入 */
+body.light-theme select,
+body.light-theme input[type="file"] {
+    background: rgba(255, 255, 255, 0.6);
+    color: #000;
+    border-color: rgba(0, 0, 0, 0.2);
+    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='6'%3Cpath fill='%23000' d='M0 0l6 6 6-6z'/%3E%3C/svg%3E");
+}
+
+body.light-theme select option {
+    background: #f5f5f5;
+    color: #000;
+}
+
+body.light-theme input[type="file"]::file-selector-button {
+    background: rgba(0, 0, 0, 0.05);
+    border-color: rgba(0, 0, 0, 0.15);
+    color: #000;
+}
+
+/* 亮色主题 - 色盘按钮 */
+body.light-theme .palette-btn {
+    box-shadow: 0 0 0 1px rgba(242, 242, 242, 0.15);
+    border-color: #f4f4f4;
+}
+
+body.light-theme .palette-btn.active {
+    border-color: #000;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
+}
+
+/* 亮色主题 - 颜色选择器 */
+body.light-theme input[type="color"]::-webkit-color-swatch {
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15);
+}
+
+/* ===== 响应式适配 ===== */
+@media (max-width: 768px) {
+    .title-bar,
+    .top-panel,
+    .control-group {
+        width: 90%;
+    }
+    
+    .grid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+    
+    .triple-item,
+    .color-type-item,
+    .full-width-item,
+    .palette-buttons {
+        grid-column: span 1;
+        flex-wrap: wrap;
+    }
+    
+    .triple-item .sub-item {
+        width: 100%;
+    }
+    
+    .color-type-item .color-item {
+        width: 50%;
+    }
+    
+    .color-type-item .type-item {
+        width: 100%;
+    }
+    
+    .title-bar {
+        padding: 0 10px;
+        height: 50px;
+        bottom: calc(6vh + 70px);
+    }
+    
+    .music-title {
+        font-size: 14px;
+    }
+    
+    .control-btn {
+        font-size: 14px;
+        padding: 8px 12px;
+    }
+    
+    .top-panel {
+        padding: 15px;
+    }
+    
+    .panel-header h3 {
+        font-size: 14px;
+    }
+}
+/* ===== 全屏按钮（放在滚动条内） ===== */
+
+.fullscreen-btn:hover {
+    transform: scale(1.1);
+    background: rgba(255, 255, 255, 0.15);
+}
+
+/* 亮色主题 */
+body.light-theme .fullscreen-btn {
+    background: rgba(255, 255, 255, 0.4);
+    border-color: rgba(0, 0, 0, 0.15);
+    color: #000;
+}
+
+body.light-theme .fullscreen-btn:hover {
+    background: rgba(0, 0, 0, 0.1);
+}

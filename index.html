@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tina's Music House</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎵</text></svg>">
+</head>
+<body>
+
+<!-- 背景层 -->
+<div id="bgPoster"></div>
+
+<!-- 底部标题栏 -->
+<div class="title-bar" id="titleBar">
+    <div class="scroll-track">   <!-- ← 新增这个容器 -->
+        <div class="music-title" id="title">Music</div>
+    </div>
+    <button class="fullscreen-btn" id="fullscreenBtn">⛶</button>
+</div>
+
+<!-- 控制按钮 -->
+<div class="control-group">
+    <button class="control-btn" id="prevBtn"><🐈</button>
+    <button class="control-btn" id="playBtn">▶ Play</button>
+    <button class="control-btn" id="nextBtn">🧸></button>
+</div>
+
+<!-- 可视化画布 -->
+<canvas id="visualizerCanvas"></canvas>
+
+<!-- 顶部设置面板 -->
+<div class="top-panel collapsed" id="topPanel">
+    <div class="panel-header">
+        <h3>😊📞Tina's  Music  House📀🛖</h3>
+        <span>▼</span>
+    </div>
+    <div class="grid">
+        <!-- 音乐文件夹 -->
+        <div class="item">
+            <label class="label">Music Folder</label>
+            <input type="file" id="folderInput" webkitdirectory directory multiple accept="audio/*,video/mp4">
+        </div>
+        <!-- 图片文件夹 -->
+        <div class="item">
+            <label class="label">Image Folder</label>
+            <input type="file" id="imgFolderInput" webkitdirectory directory multiple accept="image/*">
+        </div>
+        <!-- 主题 -->
+        <div class="item">
+            <label class="label">Theme</label>
+            <select id="theme">
+                <option value="dark">Dark</option>
+                <option value="light" selected>Light</option>
+            </select>
+        </div>
+        <!-- 播放模式 -->
+        <div class="item">
+            <label class="label">Play Mode</label>
+            <select id="playMode">
+                <option value="sequence" selected>Sequence▶️</option>
+                <option value="random">Random🔀</option>
+                <option value="loop">Loop Single🔁</option>
+            </select>
+        </div>
+        <!-- 播放列表 -->
+        <div class="full-width-item">
+            <label class="label">Playlist</label>
+            <select id="songSelect"></select>
+        </div>
+        <!-- 背景选择 -->
+        <div class="full-width-item">
+            <label class="label">Background</label>
+            <select id="bgSelect"></select>
+        </div>
+        <!-- 色盘 -->
+        <div class="palette-buttons">
+            <label class="palette-label">Palette</label>
+            <button class="palette-btn active" id="palette1" style="background: linear-gradient(135deg, #F9E5AF, #86C5CA);"></button>
+            <button class="palette-btn" id="palette2" style="background: linear-gradient(135deg, #B4CFCB 30%, #5C4444 70%);"></button>
+            <button class="palette-btn" id="palette4" style="background: linear-gradient(135deg, #F8BCCB, #A8D8D7);"></button>
+            <button class="palette-btn" id="palette6" style="background: linear-gradient(135deg, #D797A8 30%, #2D2E33 70%);"></button>
+            <button class="palette-btn" id="palette8" style="background: linear-gradient(135deg, #1B4436, #8BA758);"></button>
+            <button class="palette-btn" id="palette9" style="background: linear-gradient(135deg, #468EBA, #FEC254);"></button>
+        </div>
+        <!-- 滑块 -->
+        <div class="triple-item">
+            <div class="sub-item">
+                <label class="label">Blur</label>
+                <input type="range" id="blur" min="0" max="20" value="8">
+            </div>
+            <div class="sub-item">
+                <label class="label">Alpha</label>
+                <input type="range" id="alpha" min="0.1" max="0.7" step="0.05" value="0.4">
+            </div>
+            <div class="sub-item">
+                <label class="label">Size</label>
+                <input type="range" id="size" min="1" max="20" value="6">
+            </div>
+        </div>
+        <!-- 颜色和类型 -->
+        <div class="color-type-item">
+            <div class="color-item">
+                <label class="label">Color 1</label>
+                <input type="color" id="c1" value="#F9E5AF">
+            </div>
+            <div class="color-item">
+                <label class="label">Color 2</label>
+                <input type="color" id="c2" value="#86C5CA">
+            </div>
+            <div class="type-item">
+                <label class="label">Visualizer Type</label>
+                <select id="visualizerType">
+                    <option value="line" selected>Bar Visualizer</option>
+                    <option value="heart">Heart Radial</option>
+                    <option value="wave">Soft Wave Line</option>
+                </select>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="js/app.bundle.js"></script>
+</body>
+</html>
