@@ -1,0 +1,39 @@
+// 在控制台粘贴运行
+const imgInput = document.createElement('input');
+imgInput.type = 'file';
+imgInput.multiple = true;
+imgInput.accept = 'image/*';
+
+imgInput.onchange = async (e) => {
+    const files = Array.from(e.target.files);
+    const result = [];
+    
+    for (const file of files) {
+        const reader = new FileReader();
+        const base64 = await new Promise((resolve) => {
+            reader.onload = (e) => resolve(e.target.result);
+            reader.readAsDataURL(file);
+        });
+        result.push({
+            name: file.name,
+            type: file.type,
+            data: base64
+        });
+        console.log(`✅ ${file.name} 转换完成`);
+    }
+    
+    // 生成JS代码并下载
+    const jsCode = `export const IMAGE_DATA = ${JSON.stringify(result, null, 2)};`;
+    const blob = new Blob([jsCode], { type: 'text/javascript' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'image_data.js';
+    a.click();
+    URL.revokeObjectURL(url);
+    console.log('📁 已下载 image_data.js');
+};
+
+imgInput.click();
+
+//浏览器里按ctrl+shift+i，点控制台，粘贴代码运行即可
